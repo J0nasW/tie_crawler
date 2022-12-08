@@ -1,3 +1,11 @@
+# Custom
+.DS_Store
+
+# STREAMLIT ---------------------------------
+secrets.toml
+
+# STANDARD PYTHON EXTENSIONS ------------------
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

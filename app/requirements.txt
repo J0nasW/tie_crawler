@@ -1,0 +1,15 @@
+# Basic Python Packages
+jsonpickle
+matplotlib
+numpy
+plotly
+
+# For Postgres DB Connection:
+sqlalchemy
+
+# Streamlit Web App Support
+streamlit
+streamlit-authenticator
+
+# Twitter crawling
+tweepy
