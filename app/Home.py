@@ -1,10 +1,19 @@
+####################################################################################
+# Home
+# by JW
+#
+# Starting point for the TIE Trend Analyzer
+# 
+# Home.py
+####################################################################################
+
 # IMPORT STATEMENTS ----------------------------------------------------------------
 
 import pandas as pd
 import numpy as np
 import datetime
-from math import floor
 import jsonpickle
+# import os
 
 # Twitter crawling (possibly not needed here in future versions)
 import tweepy
@@ -14,15 +23,12 @@ import streamlit as st
 # ToDo: Streamlit Auth (https://blog.streamlit.io/streamlit-authenticator-part-1-adding-an-authentication-component-to-your-app/)
 # import streamlit_authenticator as stauth
 
-# For Postgres DB Connection
-from sqlalchemy import create_engine
-
 # INITIALIZATION OF THE APPLICATION -------------------------------------------------
 
 ### STREAMLIT Init:
 
 # SETTING PAGE CONFIG TO WIDE MODE AND ADDING A TITLE AND FAVICON
-st.set_page_config(layout="centered", page_title="TIE Twitter Tool", page_icon=":bar-chart:")
+st.set_page_config(layout="centered", page_title="TIE Trend Navigator", page_icon=":bar-chart:")
 
 # Some Session State Initializations -------
 
@@ -46,20 +52,6 @@ if "crawled_tweets" not in st.session_state:
     st.session_state["crawled_tweets"] = ""
 
 
-### POSTGRES Init:
-
-# INITIALIZE POSTGRES DB CONNECTION
-# conn_str = "postgresql+psycopg2://root:password@postgres_db:5432/bookstore"
-
-# engine = create_engine(conn_str)
-# connection = engine.connect()
-# res = connection.execute("SELECT * FROM pg_catalog.pg_tables;")
-
-
-
-
-
-
 # START OF THE APPLICATION -------------------------------------------------------------------
 
 logo, title = st.columns([1, 5])
@@ -67,9 +59,11 @@ logo, title = st.columns([1, 5])
 with logo:
     st.image("assets/logo.png")
 with title:
-    st.title("TIE Twitter Analysis Tool")
+    st.title("TIE Trend Navigator")
 
-st.write("Welcome to the TIE Twitter Analysis Tool. It is a collection of useful twitter-related functions to analyze social behaviours and sentiments.")
+st.write("Welcome to the TIE Trend Navigator. With this app, you can easily discover trends and crawl useful data from a lot of different data-sources.")
+st.caption("In order to work, the Trend Navigator uses API access from most of its sources. Please head over to the settings page to provide suitable API credentials or store them as secrets in a secrets.toml file (or online)")
+
 st.caption("If you did not specify your Twitter API Credentials in the environment variables, feel free to open up the sidebar and provide these credentials for this session.")
 
 st.write("")

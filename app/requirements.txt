@@ -6,6 +6,8 @@ plotly
 
 # For Postgres DB Connection:
 sqlalchemy
+psycopg2-binary
+
 
 # Streamlit Web App Support
 streamlit
@@ -13,3 +15,9 @@ streamlit-authenticator
 
 # Twitter crawling
 tweepy
+
+
+# Preprocessors
+nltk
+num2words
+splitter
