@@ -9,34 +9,20 @@
 
 # IMPORT STATEMENTS ----------------------------------------------------------------
 import streamlit as st
-from datetime import datetime
+from datetime import datetime as dt
 
 # Own Functions
 from helpers.db_functions import *
 
 
 # SETTING PAGE CONFIG TO WIDE MODE AND ADDING A TITLE AND FAVICON
-st.set_page_config(layout="wide", page_title="Postgres Admin Tool", page_icon=":gear:")
+st.set_page_config(layout="wide", page_title="Project Builder", page_icon="🏗")
 
-# States
-if "schema_name" not in st.session_state:
-    st.session_state["schema_name"] = "tie"
-
-if "postgres_cred" not in st.session_state:
-    st.session_state["postgres_cred"] = {}
-
-if "db_engine" not in st.session_state:
-    st.session_state["db_engine"] = False
-if "db_connection" not in st.session_state:
-    st.session_state["db_connection"] = ""
-if "db_connection_status" not in st.session_state:
-    st.session_state["db_connection_status"] = False
-
-if "project_submit" not in st.session_state:
-    st.session_state["project_submit"] = False
 project_submit = st.session_state["project_submit"]
 
-st.title("Postgres Admin Tool")
+st.title("🏗 Project Builder")
+
+st.write("A simple tool to build projects.")
 
 # SIDEBAR -----------------------------------------
 
@@ -51,40 +37,40 @@ with st.sidebar:
         #     st.write("But there are some database information stored in the session. You can try to connect with these:")
         #     st.button(label="Connect with session credentials", on_click=postgres_init(st.session_state.postgres_cred))
 
-    with st.expander("Postgres DB Connection"):
-        with st.form("postgres_connect_sidebar"):
+    # with st.expander("Postgres DB Connection"):
+    #     with st.form("postgres_connect_sidebar"):
 
-            postgres_cred = st.session_state.postgres_cred
+    #         postgres_cred = st.session_state.postgres_cred
 
-            st.write("Provide Postgres DB Infos here:")
+    #         st.write("Provide Postgres DB Infos here:")
 
-            postgres_cred["name"] = st.text_input(label="Name of Connection", value="MyServer")
-            postgres_cred["host"] = st.text_input(label="Postgres DB Host", value="localhost")
-            postgres_cred["port"] = st.number_input(label="Postgres DB Port", value=5433)
-            postgres_cred["db_name"] = st.text_input(label="DB Name", value="tie_crawler")
-            postgres_cred["db_user"] = st.text_input(label="DB User", value="tie")
-            postgres_cred["db_password"] = st.text_input(label="DB Password", value="iPkt9FsmoQ7*xdGr")
+    #         postgres_cred["name"] = st.text_input(label="Name of Connection", value="MyServer")
+    #         postgres_cred["host"] = st.text_input(label="Postgres DB Host", value="localhost")
+    #         postgres_cred["port"] = st.number_input(label="Postgres DB Port", value=5433)
+    #         postgres_cred["db_name"] = st.text_input(label="DB Name", value="tie_crawler")
+    #         postgres_cred["db_user"] = st.text_input(label="DB User", value="tie")
+    #         postgres_cred["db_password"] = st.text_input(label="DB Password", value="iPkt9FsmoQ7*xdGr")
 
-            # Every form must have a submit button.
-            submitted = st.form_submit_button("Submit")
+    #         # Every form must have a submit button.
+    #         submitted = st.form_submit_button("Submit")
 
 # ----------------------------------------------------
 
 
 
-if submitted:
-    st.session_state.postgres_cred = postgres_cred
-    with st.spinner('Wait while we connect your databse...'):
-        try:
-            db_engine, db_connection = postgres_init(postgres_cred)
-            st.session_state.db_engine = db_engine
-            st.session_state.db_connection_status = True
-            st.session_state.db_connection = db_connection
-            st.success("Connection to Database " + postgres_cred["host"] + ":" + str(postgres_cred["port"]) + " successful!")
-        except Exception as e:
-            st.error("There was an unexpected error while connecting to your Postgres DB. Please try again and double check your DB credentials.")
-            st.write(e)
-            st.session_state.db_connection_status = False
+# if submitted:
+#     st.session_state.postgres_cred = postgres_cred
+#     with st.spinner('Wait while we connect your databse...'):
+#         try:
+#             db_engine, db_connection = postgres_init(postgres_cred)
+#             st.session_state.db_engine = db_engine
+#             st.session_state.db_connection_status = True
+#             st.session_state.db_connection = db_connection
+#             st.success("Connection to Database " + postgres_cred["host"] + ":" + str(postgres_cred["port"]) + " successful!")
+#         except Exception as e:
+#             st.error("There was an unexpected error while connecting to your Postgres DB. Please try again and double check your DB credentials.")
+#             st.write(e)
+#             st.session_state.db_connection_status = False
 
 
 if st.session_state.db_connection_status:
@@ -96,7 +82,7 @@ if st.session_state.db_connection_status:
 
         project["name"] = st.text_input(label="Name of the Project", placeholder="My first project")
         project["description"] = st.text_area(label="Description", placeholder="Some facts about your project")
-        project["creationdate"] = datetime.now()
+        project["creationdate"] = dt.now()
         st.write("Choose the services that are activated for your project:")
         col1, col2, col3, col4 = st.columns(4)
         with col1:
@@ -112,9 +98,9 @@ if st.session_state.db_connection_status:
         with col1:
             project["startdate"] = st.date_input("Start date",)
         with col2:
-            project["enddate"] = st.date_input("End date", datetime.now())
+            project["enddate"] = st.date_input("End date", dt.now())
         st.write("")
-        st.write("Now you can choose, if you want your project to stream data in the future or if you just want a normal crawl. Note, that when streaming, you must provide an end date that lies in the future.")
+        st.write("Now you can choose, if you want your project to stream data in the future or if you just want a normal crawl. Note, that when streaming, you must provide an end date that lies in the future. (EXPERIMENTAL)")
         col1, col2, = st.columns(2)
         with col1:
             project["streaming"] = st.checkbox("Stream data from the future")
@@ -142,17 +128,9 @@ if st.session_state.db_connection_status:
         st.session_state.project_submit = True
 
 if project_submit:
-    with st.spinner('Wait while we create the schema...'):
-        try:
-            schema_name = st.session_state.schema_name
-            schema_init(st.session_state.db_connection, schema_name)
-        except Exception as e:
-            st.error("There was an unexpected error while creating the schema. Please try again or check the error messages below.")
-            st.write(e)
-
     with st.spinner('Wait while we create your project...'):
         try:
-            project_created, result = project_init(project, st.session_state.db_engine, st.session_state.db_connection)
+            project_created, result = project_init(project)
             
             st.success("The project " + project["name"] + " has been created successfully! The UUID is: " + str(project["uuid"]))
             if project["name"] not in st.session_state:

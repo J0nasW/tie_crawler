@@ -9,6 +9,7 @@
 
 # IMPORT STATEMENTS ----------------------------------------------------------------
 
+
 import pandas as pd
 import numpy as np
 import datetime
@@ -23,34 +24,19 @@ import streamlit as st
 # ToDo: Streamlit Auth (https://blog.streamlit.io/streamlit-authenticator-part-1-adding-an-authentication-component-to-your-app/)
 # import streamlit_authenticator as stauth
 
+# Own Functions
+from helpers.first_init import *
+
 # INITIALIZATION OF THE APPLICATION -------------------------------------------------
+
+### General Init:
+if "app_init" not in st.session_state:
+    init_application()
 
 ### STREAMLIT Init:
 
 # SETTING PAGE CONFIG TO WIDE MODE AND ADDING A TITLE AND FAVICON
 st.set_page_config(layout="centered", page_title="TIE Trend Navigator", page_icon=":bar-chart:")
-
-# Some Session State Initializations -------
-
-# Own Twitter API Credentials
-if "env_cred" not in st.session_state:
-    st.session_state["env_cred"] = True
-if "tw_api_key" not in st.session_state:
-    st.session_state["tw_api_key"] = ""
-if "tw_api_secret" not in st.session_state:
-    st.session_state["tw_api_secret"] = ""
-if "tw_acc_token" not in st.session_state:
-    st.session_state["tw_acc_token"] = ""
-if "tw_acc_token_secret" not in st.session_state:
-    st.session_state["tw_acc_token_secret"] = ""
-if "tw_bearer_token" not in st.session_state:
-    st.session_state["tw_bearer_token"] = ""
-
-if "crawl_status" not in st.session_state:
-    st.session_state["crawl_status"] = False
-if "crawled_tweets" not in st.session_state:
-    st.session_state["crawled_tweets"] = ""
-
 
 # START OF THE APPLICATION -------------------------------------------------------------------
 
