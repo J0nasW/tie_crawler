@@ -21,6 +21,8 @@ import tweepy
 
 # Streamlit Web App
 import streamlit as st
+from streamlit_extras.switch_page_button import switch_page
+
 # ToDo: Streamlit Auth (https://blog.streamlit.io/streamlit-authenticator-part-1-adding-an-authentication-component-to-your-app/)
 # import streamlit_authenticator as stauth
 
@@ -29,31 +31,42 @@ from helpers.first_init import *
 
 # INITIALIZATION OF THE APPLICATION -------------------------------------------------
 
+### STREAMLIT Init:
+
+# SETTING PAGE CONFIG TO WIDE MODE AND ADDING A TITLE AND FAVICON
+st.set_page_config(layout="wide", page_title="TIE Trend Navigator", page_icon="📈")
+
 ### General Init:
 if "app_init" not in st.session_state:
     init_application()
 
-### STREAMLIT Init:
-
-# SETTING PAGE CONFIG TO WIDE MODE AND ADDING A TITLE AND FAVICON
-st.set_page_config(layout="centered", page_title="TIE Trend Navigator", page_icon=":bar-chart:")
-
 # START OF THE APPLICATION -------------------------------------------------------------------
 
-logo, title = st.columns([1, 5])
 
-with logo:
-    st.image("assets/logo.png")
-with title:
-    st.title("TIE Trend Navigator")
+st.image("assets/logo_wide.png", width=600, clamp=True)
+st.title("📈 TIE Trend Navigator")
 
 st.write("Welcome to the TIE Trend Navigator. With this app, you can easily discover trends and crawl useful data from a lot of different data-sources.")
-st.caption("In order to work, the Trend Navigator uses API access from most of its sources. Please head over to the settings page to provide suitable API credentials or store them as secrets in a secrets.toml file (or online)")
-
-st.caption("If you did not specify your Twitter API Credentials in the environment variables, feel free to open up the sidebar and provide these credentials for this session.")
+st.caption("In order to work, the Trend Navigator uses API access from most of its sources. Please head over to the settings page to provide suitable API credentials or store them as secrets in a secrets.toml file (or online).")
 
 st.write("")
 st.write("")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    if st.button("🏗 Project Builder"):
+        switch_page("Project Builder")
+
+with col2:
+    if st.button("📖 Query Builder"):
+        switch_page("Query Builder")
+
+with col3:
+    if st.button("⚙ Settings"):
+        switch_page("Settings")
+
+
 # st.image("assets/tw_sentiment_banner.jpg", use_column_width="auto")
 
 
@@ -82,8 +95,6 @@ with st.form(key="search_inputs"):
     if "tweets" not in st.session_state:
         # These are all for debugging.
         st.session_state.tweets = []
-        st.session_state.curr_tweet_page = 0
-        st.session_state.curr_raw_tweet_page = 0
 
 
     # TWITTER FUNCTIONS --------------------------------------

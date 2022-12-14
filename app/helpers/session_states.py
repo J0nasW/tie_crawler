@@ -53,6 +53,28 @@ def session_init():
     # Twitter
     if "twitter_client" not in st.session_state:
         st.session_state["twitter_client"] = ""
+    if "twitter_client_v2" not in st.session_state:
+        st.session_state["twitter_client_v2"] = ""
+    if "twitter_tweet_fields" not in st.session_state:
+        st.session_state["twitter_tweet_fields"] = [
+            "attachments",
+            "author_id",
+            "context_annotations",
+            "conversation_id",
+            "created_at",
+            "edit_controls",
+            "entities",
+            "geo",
+            "id",
+            "in_reply_to_user_id",
+            "lang", "public_metrics",
+            "possibly_sensitive",
+            "referenced_tweets",
+            "reply_settings",
+            "source",
+            "text",
+            "withheld"
+        ]
 
     ## Twitter API Credentials
     if "env_cred" not in st.session_state:
@@ -67,6 +89,11 @@ def session_init():
         st.session_state["tw_acc_token_secret"] = ""
     if "tw_bearer_token" not in st.session_state:
         st.session_state["tw_bearer_token"] = ""
+
+    if "temp_tweets" not in st.session_state:
+        st.session_state["temp_tweets"] = ""
+    if "tw_pagination_page" not in st.session_state:
+        st.session_state["tw_pagination_page"] = 0
 
     # OpenALEX API Credentials
     # Scopus API Credentials

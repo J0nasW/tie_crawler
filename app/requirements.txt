@@ -11,6 +11,7 @@ psycopg2-binary
 
 # Streamlit Web App Support
 streamlit
+streamlit-extras
 streamlit-authenticator
 
 # Twitter crawling

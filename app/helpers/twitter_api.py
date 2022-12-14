@@ -14,6 +14,9 @@ import tweepy
 # Streamlit Web App
 import streamlit as st
 
+# Other functions
+import jsonpickle
+
 # Own functions
 from helpers.helper_functions import *
 
@@ -28,7 +31,7 @@ def connect_twitter_api():
         else:
             # Using API Credentials defined in the session state
             auth = tweepy.OAuth2AppHandler(st.session_state.tw_api_key, st.session_state.tw_api_secret)
-        #twitter_client = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
+        #st.session_state.twitter_client = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 
         st.session_state.twitter_client = tweepy.API(auth)
     except Exception as e:
@@ -76,14 +79,22 @@ def get_tweets(search_params):
 
     return tweets
 
-def get_tweet_url(tweet):
-        return f"https://twitter.com/{tweet.user.screen_name}/status/{tweet.id_str}"
 
-def display_tweet(tweet):
-    parsed_tweet = {
-        "author": tweet.user.screen_name,
-        "created_at": tweet.created_at,
-        "url": get_tweet_url(tweet),
-        "text": tweet.text,
-    }
-    display_dict(parsed_tweet)
+
+def connect_twitter_api_v2():
+    with st.spinner('Wait while we connect you to the Twitter V2 API...'):
+        try:
+            # Using Tweepy's v1 API
+            if st.session_state.env_cred == True:
+                # Using API Credentials from secrets.toml
+                tw_client = tweepy.Client(bearer_token=st.secrets.TWITTER_BEARER_TOKEN, consumer_key=st.secrets.TWITTER_API_KEY, consumer_secret=st.secrets.TWITTER_API_SECRET, access_token=st.secrets.TWITTER_ACCESS_TOKEN, access_token_secret=st.secrets.TWITTER_ACCESS_TOKEN_SECRET, wait_on_rate_limit=True)
+            else:
+                # Using API Credentials defined in the session state
+                tw_client = tweepy.Client(bearer_token=st.session_state.tw_bearer_token, consumer_key=st.session_state.tw_api_key, consumer_secret=st.session_state.tw_api_secret, access_token=st.session_state.tw_acc_token, access_token_secret=st.session_state.tw_acc_token_secret, wait_on_rate_limit=True)
+
+            st.session_state.twitter_client_v2 = tw_client
+        except Exception as e:
+            st.error("There was a problem connecting to the Twitter V2 API.")
+            st.write(e)
+
+    #return tw_client

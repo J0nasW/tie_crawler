@@ -13,6 +13,18 @@ import datetime
 # Streamlit Web App
 import streamlit as st
 
+def get_tweet_url(username, tw_id):
+        return f"https://twitter.com/{username}/status/{tw_id}"
+
+def display_tweet(tweet, users):
+    parsed_tweet = {
+        "author_id": tweet.author_id,
+        "author_name": users[tweet.author_id],
+        "created_at": tweet.created_at,
+        "url": get_tweet_url(users[tweet.author_id], tweet.id),
+        "text": tweet.text,
+    }
+    display_dict(parsed_tweet)
 
 def rel_to_abs_date(days):
     if days == None:
@@ -25,23 +37,25 @@ def display_dict(dict):
         a.write(f"**{k}:**")
         b.write(v)
 
-def paginator(values, state_key, page_size, btn_key_next, btn_key_prev):
-    curr_page = getattr(st.session_state, state_key)
+def paginator(values, page_size, btn_key_next, btn_key_prev):
+    curr_page = st.session_state.tw_pagination_page
+
+    st.write("Found " + str(len(values)) + "entries:")
 
     a, b, c = st.columns(3)
 
     def decrement_page():
-        curr_page = getattr(st.session_state, state_key)
+        curr_page = st.session_state.tw_pagination_page
         if curr_page > 0:
-            setattr(st.session_state, state_key, curr_page - 1)
+            st.session_state.tw_pagination_page = curr_page - 1
 
     def increment_page():
-        curr_page = getattr(st.session_state, state_key)
+        curr_page = st.session_state.tw_pagination_page
         if curr_page + 1 < len(values) // page_size:
-            setattr(st.session_state, state_key, curr_page + 1)
+            st.session_state.tw_pagination_page = curr_page + 1
 
     def set_page(new_value):
-        setattr(st.session_state, state_key, new_value - 1)
+        st.session_state.tw_pagination_page = new_value - 1
 
     a.write(" ")
     a.write(" ")
@@ -58,7 +72,7 @@ def paginator(values, state_key, page_size, btn_key_next, btn_key_prev):
         on_change=set_page,
     )
 
-    curr_page = getattr(st.session_state, state_key)
+    curr_page = st.session_state.tw_pagination_page
 
     page_start = curr_page * page_size
     page_end = page_start + page_size

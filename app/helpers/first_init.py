@@ -25,7 +25,8 @@ def init_application():
         tie_init(st.session_state.postgres_cred, st.session_state.schema_name)
 
         # Connect the Twitter API ----------------------------------------------------------
-        connect_twitter_api()
+        # connect_twitter_api()
+        connect_twitter_api_v2()
 
         # Initialization done --------------------------------------------------------------
         st.session_state.app_init = True
