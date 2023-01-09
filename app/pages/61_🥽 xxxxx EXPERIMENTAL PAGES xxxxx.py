@@ -1,10 +1,10 @@
 ####################################################################################
-# Settings Page
+# PAGE DIVIDER
 # by JW
 #
 # Manage Settings and Session States
 # 
-# Home.py / Settings.py
+# pages / 61_xxxxxxx EXPERIMENTAL PAGES xxxxxxx.py
 ####################################################################################
 
 # IMPORT STATEMENTS ----------------------------------------------------------------
@@ -19,6 +19,6 @@ st.set_page_config(layout="wide", page_title="Settings", page_icon="⚙")
 
 project_submit = st.session_state["project_submit"]
 
-st.title("⚙ Settings")
+st.title("🥽 Experimental Pages")
 
 st.write("TIE Trend Navigator Settings")

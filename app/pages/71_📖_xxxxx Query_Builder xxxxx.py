@@ -79,8 +79,14 @@ with col_arxiv:
     else:
         st.metric(label="arXiv", value="❌")
 
-st.subheader("Name: " + df_list_of_projects.loc[df_list_of_projects['id'] == option, 'name'].iloc[0])
-st.caption("Description: " + df_list_of_projects.loc[df_list_of_projects['id'] == option, 'description'].iloc[0])
+col_pj_name, col_pj_desc = st.columns([1, 1])
+
+with col_pj_name:
+    st.metric(label="Name of the Project", value=df_list_of_projects.loc[df_list_of_projects['id'] == option, 'name'].iloc[0])
+
+with col_pj_desc:
+    st.metric(label="Description", value=df_list_of_projects.loc[df_list_of_projects['id'] == option, 'description'].iloc[0])
+
 
 query_exists, db_search_params = get_twitter_query(option)
 

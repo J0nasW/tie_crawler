@@ -26,6 +26,17 @@ import streamlit as st
 from helpers.db_functions import *
 from helpers.twitter_api import *
 
+### STREAMLIT Init:
+
+# SETTING PAGE CONFIG TO WIDE MODE AND ADDING A TITLE AND FAVICON
+st.set_page_config(layout="wide", page_title="Tests", page_icon="🧮")
+
+# Start of the page
+
+st.title("🧮 Tests")
+
+st.write("Some Tests")
+
 if st.button("Search all tweets"):
     tw_client = connect_twitter_api_v2()
     fields = ["attachments", "author_id", "context_annotations", "conversation_id", "created_at", "edit_controls", "entities", "geo", "id", "in_reply_to_user_id", "lang", "public_metrics", "possibly_sensitive", "referenced_tweets", "reply_settings", "source", "text", "withheld"]

@@ -85,12 +85,12 @@ def connect_twitter_api_v2():
     with st.spinner('Wait while we connect you to the Twitter V2 API...'):
         try:
             # Using Tweepy's v1 API
-            if st.session_state.env_cred == True:
+            if st.session_state.tw_env_cred:
                 # Using API Credentials from secrets.toml
                 tw_client = tweepy.Client(bearer_token=st.secrets.TWITTER_BEARER_TOKEN, consumer_key=st.secrets.TWITTER_API_KEY, consumer_secret=st.secrets.TWITTER_API_SECRET, access_token=st.secrets.TWITTER_ACCESS_TOKEN, access_token_secret=st.secrets.TWITTER_ACCESS_TOKEN_SECRET, wait_on_rate_limit=True)
             else:
                 # Using API Credentials defined in the session state
-                tw_client = tweepy.Client(bearer_token=st.session_state.tw_bearer_token, consumer_key=st.session_state.tw_api_key, consumer_secret=st.session_state.tw_api_secret, access_token=st.session_state.tw_acc_token, access_token_secret=st.session_state.tw_acc_token_secret, wait_on_rate_limit=True)
+                tw_client = tweepy.Client(bearer_token=st.session_state.tw_api_cred["tw_bearer_token"], consumer_key=st.session_state.tw_api_cred["tw_api_key"], consumer_secret=st.session_state.tw_api_cred["tw_api_secret"], access_token=st.session_state.tw_api_cred["tw_acc_token"], access_token_secret=st.session_state.tw_api_cred["tw_acc_token_secret"], wait_on_rate_limit=True)
 
             st.session_state.twitter_client_v2 = tw_client
         except Exception as e:

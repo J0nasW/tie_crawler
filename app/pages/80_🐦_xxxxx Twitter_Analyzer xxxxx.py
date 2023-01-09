@@ -67,7 +67,6 @@ if query_exists:
                 #     st.write(tweet)
                 st.session_state.temp_tweets = tweets
 
-
                 st.success('Done!')
             except Exception as e:
                 st.error("There was an unexpected error while collecting the tweets. Please try again and double check your API credentials.")

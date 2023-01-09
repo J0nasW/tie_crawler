@@ -20,6 +20,8 @@ from nltk.stem import PorterStemmer, WordNetLemmatizer
 import num2words
 import splitter
 
+
+
 def query_filter(data, query, special_words):
     # query = tokenize_data(query)
     # query = lowercase(query)

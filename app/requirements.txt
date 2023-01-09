@@ -3,6 +3,7 @@ jsonpickle
 matplotlib
 numpy
 plotly
+scipy
 
 # For Postgres DB Connection:
 sqlalchemy
@@ -22,3 +23,8 @@ tweepy
 nltk
 num2words
 splitter
+
+# Huggingface
+transformers
+sentencepiece
+torch

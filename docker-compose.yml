@@ -21,6 +21,20 @@ services:
     volumes:
       - ./postgres:/docker-entrypoint-initdb.d
 
+  pg_admin:
+    image: dpage/pgadmin4:latest
+    environment:   # Set up pg_admin user and password
+      PGADMIN_DEFAULT_EMAIL: mail@example.com
+      PGADMIN_DEFAULT_PASSWORD: example
+    ports:    # Set up ports exposed for other containers to connect to
+      - 5480:80
+    depends_on:
+      - postgres_db
+    networks:
+      - app-tier
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+
   tie-crawler:
     build:
       context: .

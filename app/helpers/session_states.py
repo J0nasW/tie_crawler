@@ -76,19 +76,68 @@ def session_init():
             "withheld"
         ]
 
+    ## Twitter Queries
+    if "tw_query_exists" not in st.session_state:
+        st.session_state["tw_query_exists"] = False
+    if "tw_basic_query" not in st.session_state:
+        st.session_state["tw_basic_query"] = {
+            "query":"",
+            "limit":100,
+        }
+    if "tw_adv_query" not in st.session_state:
+        st.session_state["tw_adv_query"] = {
+            "query":"",
+            "limit":100,
+            "min_replies":0,
+            "min_retweets":0,
+            "min_faves":0,
+            "days_ago":"",
+            "exclude_replies":False,
+            "exclude_retweets":False
+        }
+    if "tw_raw_query" not in st.session_state:
+        st.session_state["tw_raw_query"] = {
+            "query":"",
+            "limit":1000
+        }
+
     ## Twitter API Credentials
-    if "env_cred" not in st.session_state:
-        st.session_state["env_cred"] = True
-    if "tw_api_key" not in st.session_state:
-        st.session_state["tw_api_key"] = ""
-    if "tw_api_secret" not in st.session_state:
-        st.session_state["tw_api_secret"] = ""
-    if "tw_acc_token" not in st.session_state:
-        st.session_state["tw_acc_token"] = ""
-    if "tw_acc_token_secret" not in st.session_state:
-        st.session_state["tw_acc_token_secret"] = ""
-    if "tw_bearer_token" not in st.session_state:
-        st.session_state["tw_bearer_token"] = ""
+    if "tw_env_cred" not in st.session_state:
+        if st.secrets.TWITTER_API_KEY == "":
+            st.session_state["tw_env_cred"] = False
+        else:
+            st.session_state["tw_env_cred"] = True
+
+    if "tw_api_cred" not in st.session_state:
+        st.session_state["tw_api_cred"] = {
+            "tw_api_key":"",
+            "tw_api_secret":"",
+            "tw_acc_token":"",
+            "tw_acc_token_secret":"",
+            "tw_bearer_token":"",
+        }
+
+    # OpenCorporates API Credentials
+    if "oc_env_cred" not in st.session_state:
+        if st.secrets.OPENCORPORATES_API_KEY == "":
+            st.session_state["oc_env_cred"] = False
+        else:
+            st.session_state["oc_env_cred"] = True
+
+    if "oc_api_token" not in st.session_state:
+        st.session_state["oc_api_token"] = ""
+
+
+    # if "tw_api_key" not in st.session_state:
+    #     st.session_state["tw_api_key"] = ""
+    # if "tw_api_secret" not in st.session_state:
+    #     st.session_state["tw_api_secret"] = ""
+    # if "tw_acc_token" not in st.session_state:
+    #     st.session_state["tw_acc_token"] = ""
+    # if "tw_acc_token_secret" not in st.session_state:
+    #     st.session_state["tw_acc_token_secret"] = ""
+    # if "tw_bearer_token" not in st.session_state:
+    #     st.session_state["tw_bearer_token"] = ""
 
     if "temp_tweets" not in st.session_state:
         st.session_state["temp_tweets"] = ""

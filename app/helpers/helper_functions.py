@@ -22,7 +22,7 @@ def display_tweet(tweet, users):
         "author_name": users[tweet.author_id],
         "created_at": tweet.created_at,
         "url": get_tweet_url(users[tweet.author_id], tweet.id),
-        "text": tweet.text,
+        "text": str(tweet.text),
     }
     display_dict(parsed_tweet)
 
@@ -40,7 +40,7 @@ def display_dict(dict):
 def paginator(values, page_size, btn_key_next, btn_key_prev):
     curr_page = st.session_state.tw_pagination_page
 
-    st.write("Found " + str(len(values)) + "entries:")
+    st.write("Found " + str(len(values)) + " Entries:")
 
     a, b, c = st.columns(3)
 
