@@ -28,3 +28,6 @@ splitter
 transformers
 sentencepiece
 torch
+
+# Sentiment Analysis
+textblob
