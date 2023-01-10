@@ -46,7 +46,7 @@ with st.sidebar:
 
     #         postgres_cred["name"] = st.text_input(label="Name of Connection", value="MyServer")
     #         postgres_cred["host"] = st.text_input(label="Postgres DB Host", value="localhost")
-    #         postgres_cred["port"] = st.number_input(label="Postgres DB Port", value=5433)
+    #         postgres_cred["port"] = st.number_input(label="Postgres DB Port", value=15433)
     #         postgres_cred["db_name"] = st.text_input(label="DB Name", value="tie_crawler")
     #         postgres_cred["db_user"] = st.text_input(label="DB User", value="tie")
     #         postgres_cred["db_password"] = st.text_input(label="DB Password", value="iPkt9FsmoQ7*xdGr")

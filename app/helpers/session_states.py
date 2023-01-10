@@ -22,7 +22,7 @@ def session_init():
         st.session_state["postgres_cred"] = {
             "name":"TN_DB",
             "host":"localhost",
-            "port":"5433",
+            "port":"15433",
             "db_name":"tie_crawler",
             "db_user":"tie",
             "db_password":"iPkt9FsmoQ7*xdGr"

@@ -15,7 +15,7 @@ services:
       POSTGRES_DB: tie_crawler
       POSTGRES_USER: tie
     ports:    # Set up ports exposed for other containers to connect to
-      - 5433:5432
+      - 15433:5432
     networks:
       - app-tier
     volumes:
