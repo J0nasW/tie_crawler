@@ -10,6 +10,7 @@
 
 # IMPORT STATEMENTS ----------------------------------------------------------------
 import streamlit as st
+import os
 
 # Own functions
 from helpers.session_states import *
@@ -18,8 +19,12 @@ from helpers.twitter_api import *
 
 def init_application():
     try:
+        # Check for Streamlit Secrets TOML -------------------------------------------------
+        path = ".streamlit/secrets.toml"
+        secrets_exist = os.path.exists(path)
+
         # Session State Initializations ----------------------------------------------------
-        session_init()
+        session_init(secrets_exist)
 
         # Postgres DB Connection and Initialization ----------------------------------------
         tie_init(st.session_state.postgres_cred, st.session_state.schema_name)
@@ -32,5 +37,5 @@ def init_application():
         st.session_state.app_init = True
 
     except Exception as e:
-        st.warning("There was a problem initializing the app:", icon="⚠️")
+        st.warning("There was a problem initializing the app", icon="⚠️")
         st.write(e)

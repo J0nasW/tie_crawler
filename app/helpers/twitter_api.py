@@ -25,7 +25,7 @@ from helpers.helper_functions import *
 def connect_twitter_api():
     try:
         # Using Tweepy's v1 API
-        if st.session_state.env_cred == True:
+        if st.session_state.tw_env_cred == True:
             # Using API Credentials from secrets.toml
             auth = tweepy.OAuth2AppHandler(st.secrets.TWITTER_API_KEY, st.secrets.TWITTER_API_SECRET)
         else:

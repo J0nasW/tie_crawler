@@ -1,6 +1,5 @@
 # Custom
 .DS_Store
-.local_dev
 .vscode
 
 # STREAMLIT ---------------------------------

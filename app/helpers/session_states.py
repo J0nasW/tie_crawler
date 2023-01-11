@@ -10,12 +10,18 @@
 # IMPORT STATEMENTS ----------------------------------------------------------------
 import streamlit as st
 
-
 # Session State Initializations -----------------------------------------------
-def session_init():
+def session_init(secrets_exist):
     # Overall States
     if "app_init" not in st.session_state:
         st.session_state["app_init"] = False
+
+    # Secret Exists State
+    if "secret_exists" not in st.session_state:
+        if secrets_exist:
+            st.session_state["secret_exists"] = True
+        else:
+            st.session_state["secret_exists"] = False
 
     # Postgres DB Connection State
     if "postgres_cred" not in st.session_state:
@@ -103,10 +109,10 @@ def session_init():
 
     ## Twitter API Credentials
     if "tw_env_cred" not in st.session_state:
-        if st.secrets.TWITTER_API_KEY == "":
-            st.session_state["tw_env_cred"] = False
-        else:
+        if secrets_exist:
             st.session_state["tw_env_cred"] = True
+        else:
+            st.session_state["tw_env_cred"] = False
 
     if "tw_api_cred" not in st.session_state:
         st.session_state["tw_api_cred"] = {
@@ -119,10 +125,10 @@ def session_init():
 
     # OpenCorporates API Credentials
     if "oc_env_cred" not in st.session_state:
-        if st.secrets.OPENCORPORATES_API_KEY == "":
-            st.session_state["oc_env_cred"] = False
-        else:
+        if secrets_exist:
             st.session_state["oc_env_cred"] = True
+        else:
+            st.session_state["oc_env_cred"] = False
 
     if "oc_api_token" not in st.session_state:
         st.session_state["oc_api_token"] = ""

@@ -26,7 +26,7 @@ st.markdown("## API Credentials")
 st.write("In this section, you can provide API Credentials for several services.")
 
 with st.expander("Twitter API"):
-    if st.secrets.TWITTER_API_KEY != "":
+    if st.session_state.tw_env_cred:
         st.info("There are Twitter API Credentials stored as secrets. Providing new credentials will overwrite them in this session.", icon="ℹ️")
 
     with st.form("twitter_credentials_form"):
@@ -44,7 +44,7 @@ with st.expander("Twitter API"):
         twitter_api_cred_submit = st.form_submit_button(label="Submit")
 
 with st.expander("OpenCorporates API"):
-    if st.secrets.OPENCORPORATES_API_KEY != "":
+    if st.session_state.oc_env_cred:
         st.info("There are OpenCorporates API Credentials stored as secrets. Providing new credentials will overwrite them in this session.", icon="ℹ️")
 
     with st.form("opencorporates_credentials_form"):

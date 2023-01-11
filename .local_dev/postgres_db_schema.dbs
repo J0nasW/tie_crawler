@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="TIE" id="Project-1905" database="PostgreSQL" >
+	<schema name="tie" >
+		<table name="oalex_crawls" prior="tbl" >
+			<column name="project_id" type="uuid" jt="102" mandatory="y" />
+			<column name="query" type="char" length="255" jt="1" />
+			<index name="pk_oalex_crawls" unique="PRIMARY_KEY" >
+				<column name="project_id" />
+			</index>
+			<fk name="project_id" to_schema="tie" to_table="projects" >
+				<fk_column name="project_id" pk="id" />
+			</fk>
+		</table>
+		<table name="projects" prior="tbl" >
+			<column name="id" type="uuid" jt="102" mandatory="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="description" type="varchar" length="255" jt="12" />
+			<column name="creationdate" type="date" jt="91" mandatory="y" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+			</column>
+			<column name="use_twitter" prior="services" type="boolean" length="50" jt="-7" mandatory="y" >
+				<defo><![CDATA[FALSE]]></defo>
+			</column>
+			<column name="use_oalex" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[FALSE]]></defo>
+			</column>
+			<column name="use_scopus" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[FALSE]]></defo>
+			</column>
+			<column name="use_arxiv" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[FALSE]]></defo>
+			</column>
+			<column name="streaming" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[FALSE]]></defo>
+			</column>
+			<column name="startdate" type="date" jt="91" />
+			<column name="enddate" type="date" jt="91" />
+			<column name="running" prior="runnung" type="boolean" jt="-7" />
+			<column name="crawl_frequency" type="char" length="50" jt="1" />
+			<index name="pk_projects" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="tw_tweet_data" prior="tw_tweet_data_0" >
+			<column name="tw_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="project_id" type="bigint" jt="-5" />
+			<column name="user_id" type="bigint" jt="-5" />
+			<column name="created_at" type="timestamp" jt="93" />
+			<column name="text" type="text" length="250" jt="12" />
+			<column name="lang" type="varchar" jt="12" />
+			<column name="device" type="varchar" jt="12" />
+			<column name="in_reply_to_status_id" type="integer" jt="4" />
+			<column name="in_reply_to_user_id" type="integer" jt="4" />
+			<column name="is_quote_status" type="boolean" length="1" jt="-7" />
+			<column name="retweet_count" type="integer" jt="4" />
+			<column name="favorite_count" type="integer" jt="4" />
+			<index name="pk_twitter_data" unique="PRIMARY_KEY" >
+				<column name="tw_id" />
+			</index>
+			<fk name="fk_project_id" to_schema="tie" to_table="projects" >
+				<fk_column name="project_id" pk="id" />
+			</fk>
+			<fk name="fk_tw_user_id" to_schema="tie" to_table="tw_user_data" >
+				<fk_column name="user_id" pk="user_id" />
+			</fk>
+		</table>
+		<table name="tw_user_data" prior="tbl" >
+			<column name="user_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" />
+			<column name="username" type="varchar" jt="12" />
+			<column name="created_at" type="timestamp" jt="93" />
+			<column name="description" type="text" length="255" jt="12" />
+			<column name="profile_image_url" type="varchar" jt="12" />
+			<column name="verified" type="boolean" jt="-7" />
+			<column name="protected" type="boolean" jt="-7" />
+			<column name="geo_location" type="varchar" jt="12" />
+			<index name="pk_tw_user_data" unique="PRIMARY_KEY" >
+				<column name="user_id" />
+			</index>
+		</table>
+		<table name="twitter_crawls" prior="tbl" >
+			<column name="project_id" prior="crawl_id" type="uuid" jt="102" mandatory="y" />
+			<column name="query" type="char" length="255" jt="1" mandatory="y" />
+			<column name="last_crawl" type="date" jt="91" />
+			<column name="tweet_limit" type="integer" jt="4" />
+			<column name="min_replies" type="integer" jt="4" />
+			<column name="min_retweets" type="integer" jt="4" />
+			<column name="min_likes" prior="min_hearts" type="integer" jt="4" />
+			<column name="date_from" type="date" jt="91" />
+			<column name="date_to" type="date" jt="91" />
+			<column name="excl_replies" type="boolean" jt="-7" />
+			<column name="excl_retweets" type="boolean" jt="-7" />
+			<index name="pk_twitter_crawls" unique="PRIMARY_KEY" >
+				<column name="project_id" />
+			</index>
+			<fk name="project_id" to_schema="tie" to_table="projects" >
+				<fk_column name="project_id" pk="id" />
+			</fk>
+		</table>
+	</schema>
+	<connector name="PostgreSQL" database="PostgreSQL" url="localhost" host="localhost" port="5432" instance="postgres" user="tie" passwd="aVBrdDlGc21vUTcqeGRHcg==" useSystemProxy="false" />
+	<layout name="Default Layout" id="Layout-1512" show_relation="columns" >
+		<callout x="48" y="48" pointer="Round" >
+			<comment><![CDATA[A layout is a diagram with tools.
+- For a better understanding of the schema, create multiple layouts.
+- Right-click the layout to create new tables. 
+- Double-click table headers to edit. 
+- The schema will be saved to the model file. 
+- Later, you can connect to any database and deploy the schema into the database.]]></comment>
+		</callout>
+	</layout>
+	<layout name="Layout 1" id="Layout-1fa4" show_column_type="y" show_relation="columns" >
+		<entity schema="tie" name="oalex_crawls" color="EEC1C1" x="832" y="48" />
+		<entity schema="tie" name="projects" color="C1D8EE" x="48" y="48" />
+		<entity schema="tie" name="tw_tweet_data" color="3986C1" x="432" y="368" />
+		<entity schema="tie" name="tw_user_data" color="C1D8EE" x="896" y="416" />
+		<entity schema="tie" name="twitter_crawls" color="C1EDEE" x="528" y="48" />
+		<script name="projects_001" id="Editor-1377" language="SQL" >
+			<string><![CDATA[CREATE  TABLE tie.projects ( 
+	id                   integer  NOT NULL  ,
+	name                 varchar(100)  NOT NULL  ,
+	description          varchar(255)    ,
+	creationdate         date DEFAULT CURRENT_DATE NOT NULL  ,
+	use_twitter          boolean DEFAULT FALSE NOT NULL  ,
+	use_oalex            boolean DEFAULT FALSE NOT NULL  ,
+	use_scopus           boolean DEFAULT FALSE NOT NULL  ,
+	use_arxiv            boolean DEFAULT FALSE NOT NULL  ,
+	streaming            boolean DEFAULT FALSE NOT NULL  ,
+	startdate            date    ,
+	enddate              date    ,
+	runnung              boolean    ,
+	crawl_frequency      char(50)    ,
+	CONSTRAINT pk_projects PRIMARY KEY ( id )
+ );]]></string>
+		</script>
+		<script name="projects_002" id="Editor-144e" language="SQL" >
+			<string><![CDATA[CREATE  TABLE tie.projects ( 
+	id                   integer  NOT NULL  GENERATED BY DEFAULT AS null ,
+	name                 varchar(100)  NOT NULL  ,
+	description          varchar(255)    ,
+	creationdate         date DEFAULT CURRENT_DATE NOT NULL  ,
+	use_twitter          boolean DEFAULT FALSE NOT NULL  ,
+	use_oalex            boolean DEFAULT FALSE NOT NULL  ,
+	use_scopus           boolean DEFAULT FALSE NOT NULL  ,
+	use_arxiv            boolean DEFAULT FALSE NOT NULL  ,
+	streaming            boolean DEFAULT FALSE NOT NULL  ,
+	startdate            date    ,
+	enddate              date    ,
+	runnung              boolean    ,
+	crawl_frequency      char(50)    ,
+	CONSTRAINT pk_projects PRIMARY KEY ( id )
+ );]]></string>
+		</script>
+		<script name="projects_003" id="Editor-1bd4" language="SQL" >
+			<string><![CDATA[CREATE  TABLE tie.projects ( 
+	id                   uuid  NOT NULL  ,
+	name                 varchar(100)  NOT NULL  ,
+	description          varchar(255)    ,
+	creationdate         date DEFAULT CURRENT_DATE NOT NULL  ,
+	use_twitter          boolean DEFAULT FALSE NOT NULL  ,
+	use_oalex            boolean DEFAULT FALSE NOT NULL  ,
+	use_scopus           boolean DEFAULT FALSE NOT NULL  ,
+	use_arxiv            boolean DEFAULT FALSE NOT NULL  ,
+	streaming            boolean DEFAULT FALSE NOT NULL  ,
+	startdate            date    ,
+	enddate              date    ,
+	runnung              boolean    ,
+	crawl_frequency      char(50)    ,
+	CONSTRAINT pk_projects PRIMARY KEY ( id )
+ );]]></string>
+		</script>
+		<script name="twitter_crawls" id="Editor-782" language="SQL" >
+			<string><![CDATA[CREATE  TABLE tie.twitter_crawls ( 
+	project_id           uuid  NOT NULL  ,
+	query                char(255)  NOT NULL  ,
+	last_crawl           date    ,
+	tweet_limit          integer    ,
+	min_replies          integer    ,
+	min_retweets         integer    ,
+	min_likes            integer    ,
+	date_from            date    ,
+	date_to              date    ,
+	excl_replies         boolean    ,
+	excl_retweets        boolean    ,
+	CONSTRAINT pk_twitter_crawls PRIMARY KEY ( project_id )
+ );
+
+ALTER TABLE tie.twitter_crawls ADD CONSTRAINT project_id FOREIGN KEY ( project_id ) REFERENCES tie.projects( id );
+]]></string>
+		</script>
+		<browser id="Browse-1c13" name="projects" confirm_updates="y" confirmed="y" >
+			<browse_table schema="tie" entity="projects" x="20" y="20" width="400" height="300" />
+		</browser>
+	</layout>
+</project>
