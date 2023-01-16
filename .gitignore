@@ -1,6 +1,7 @@
 # Custom
 .DS_Store
 .vscode
+.local_dev
 
 # STREAMLIT ---------------------------------
 secrets.toml

@@ -133,6 +133,26 @@ def session_init(secrets_exist):
     if "oc_api_token" not in st.session_state:
         st.session_state["oc_api_token"] = ""
 
+    # Text Extraction
+    if "text_extracted" not in st.session_state:
+        st.session_state["text_extracted"] = False
+
+    if "url_text" not in st.session_state:
+        st.session_state["url_text"] = []
+
+    if "cleaned_raw_text" not in st.session_state:
+        st.session_state["cleaned_raw_text"] = ""
+
+    if "uploaded_files_infos" not in st.session_state:
+        st.session_state["uploaded_files_infos"] = []
+
+    if "url_infos" not in st.session_state:
+        st.session_state["url_infos"] = []
+
+    # Geocode AI Radar
+    if "geocode_df" not in st.session_state:
+        st.session_state["geocode_df"] = ""
+
 
     # if "tw_api_key" not in st.session_state:
     #     st.session_state["tw_api_key"] = ""
