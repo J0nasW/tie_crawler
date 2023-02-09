@@ -34,18 +34,18 @@ emoji_pattern = re.compile(
 
 
 def clean_text(x):
-    # x = x.lower()  # lowercase
+    x = x.lower()  # lowercase
     x = x.encode("ascii", "ignore").decode()  # unicode
     x = re.sub(r"https*\S+", " ", x)  # url
     x = re.sub(r"@\S+", " ", x)  # mentions
     x = re.sub(r"#\S+", " ", x)  # hastags
-    # x = x.replace("'", "")  # remove ticks
-    # x = re.sub("[%s]" % re.escape(string.punctuation), " ", x)  # punctuation
+    x = x.replace("'", "")  # remove ticks
+    x = re.sub("[%s]" % re.escape(string.punctuation), " ", x)  # punctuation
     x = re.sub(r"\w*\d+\w*", "", x)  # numbers
     x = re.sub(r"\s{2,}", " ", x)  # over spaces
     x = emoji_pattern.sub(r"", x)  # emojis
     x = re.sub("[^.,!?A-Za-z0-9]+", " ", x)  # special charachters except .,!?
-    # x = re.sub(r"(\w)([A-Z])", r"\1 \2", x) # Insert spaces before capital letters in order to split words
+    x = re.sub(r"(\w)([A-Z])", r"\1 \2", x) # Insert spaces before capital letters in order to split words
 
     # ' '.join(word for word in x.split() if len(word)>1)
     # ' '.join(word for word in x.split() if len(word)<20)

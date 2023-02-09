@@ -4,11 +4,13 @@ matplotlib
 numpy
 plotly
 scipy
+xmltodict
 
 # For Postgres DB Connection:
 sqlalchemy
 psycopg2-binary
 
+arxiv
 
 # Streamlit Web App Support
 streamlit
@@ -37,3 +39,6 @@ torch
 textblob
 
 pydeck
+
+# FOr Scopus
+elsapy

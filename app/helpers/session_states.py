@@ -9,6 +9,7 @@
 
 # IMPORT STATEMENTS ----------------------------------------------------------------
 import streamlit as st
+import pandas as pd
 
 # Session State Initializations -----------------------------------------------
 def session_init(secrets_exist):
@@ -173,6 +174,31 @@ def session_init(secrets_exist):
     # OpenALEX API Credentials
     # Scopus API Credentials
     # arXiv API Credentials (currently not needed)
+    if "arxiv_results" not in st.session_state:
+        st.session_state["arxiv_results"] = ""
+    if "arxiv_pdf_results" not in st.session_state:
+        st.session_state["arxiv_pdf_results"] = pd.DataFrame()
+    if "arxiv_pdf_dict" not in st.session_state:
+        st.session_state["arxiv_pdf_dict"] = {}
+    if "arxiv_pdf_corpus" not in st.session_state:
+        st.session_state["arxiv_pdf_corpus"] = ""
+
+    if "lda_num_topics" not in st.session_state:
+        st.session_state["lda_num_topics"] = 10
+    if "lda_num_iterations" not in st.session_state:
+        st.session_state["lda_num_iterations"] = 10
+    if "lda_num_workers" not in st.session_state:
+        st.session_state["lda_num_workers"] = 4
+    if "lda_num_passes" not in st.session_state:
+        st.session_state["lda_num_passes"] = 10
+
+    if "arxiv_lda_model" not in st.session_state:
+        st.session_state["arxiv_lda_model"] = ""
+    if "arxiv_lda_finished" not in st.session_state:
+        st.session_state["arxiv_lda_finished"] = False
+
+    if "arxiv_similarity_matrix" not in st.session_state:
+        st.session_state["arxiv_similarity_matrix"] = ""
 
     # Some other Session States
     if "crawl_status" not in st.session_state:
