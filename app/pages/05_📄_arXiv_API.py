@@ -1,8 +1,6 @@
 import pandas as pd
 import requests
-import arxiv
 import xmltodict
-import numpy as np
 import json
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -10,28 +8,17 @@ sns.set()
 
 import subprocess
 import time
-import os
-
 
 # Analyzation Libraries
-import spacy
 import pyLDAvis.gensim_models
 
 #import en_core_web_md
-from gensim.corpora.dictionary import Dictionary
 from gensim.corpora.mmcorpus import MmCorpus
 from gensim.models import LdaModel
 from gensim.models import CoherenceModel
 
-from io import BytesIO
-
 import streamlit as st
 import streamlit.components as components
-
-from preprocessors.text_extraction import (
-    clean_text,
-    read_pdf,
-)
 
 from preprocessors.downloaders import (
     get_text_from_pdf_url,
